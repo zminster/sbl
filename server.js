@@ -51,8 +51,17 @@ app.get("/getRubric/:code", (req, res) => {
       connection.query("SELECT standard, id, level_one, level_two, level_three, level_four FROM category WHERE rubric_id=?", id[0].id, (err, standards) => {
         if (err) console.log(err);
         standards.forEach((item, index) => {
-          obj.standards.push(item);
+          let inner = { };
+          inner.standard = item.standard;
+          inner.id = item.id;
+          inner.levels = [];
+          inner.levels.push(item.level_one);
+          inner.levels.push(item.level_two);
+          inner.levels.push(item.level_three);
+          inner.levels.push(item.level_four);
+          obj.standards.push(inner);
         });
+        console.log(obj);
         res.json(obj);
       });
     } else {
