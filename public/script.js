@@ -1,41 +1,131 @@
-// // client-side js, loaded by index.html
-// // run by the browser each time the page is loaded
+$(".after-access").hide();
 
-// console.log("hello world :o");
+$("#make-rubric").click(function() {
+	window.location = "/makeRubric";
+});
 
-// // define variables that reference elements on our page
-// const dreamsList = document.getElementById("dreams");
-// const dreamsForm = document.querySelector("form");
+$("#access-rubric").click(function() {
+	$(".form__group").hide();
+	$("#headline").hide();
+	$(".buttons").hide();
+	$(".after-access").show();
 
-// // a helper function that creates a list item for a given dream
-// function appendNewDream(dream) {
-//   const newListItem = document.createElement("li");
-//   newListItem.innerText = dream;
-//   dreamsList.appendChild(newListItem);
-// }
+	//use rubric code
+	var code = $("#rubric-code").val();
 
-// // fetch the initial list of dreams
-// fetch("/dreams")
-//   .then(response => response.json()) // parse the JSON from the server
-//   .then(dreams => {
-//     // remove the loading text
-//     dreamsList.firstElementChild.remove();
-  
-//     // iterate through every dream and add it to our page
-//     dreams.forEach(appendNewDream);
-  
-//     // listen for the form to be submitted and add a new dream when it is
-//     dreamsForm.addEventListener("submit", event => {
-//       // stop our form submission from refreshing the page
-//       event.preventDefault();
+	$.get("/getRubric", code, function(data) {
+		//replacing text elements
+		$("#category1").html(data[0].category1);
+		$("#category2").html(data[0].category2);
+		$("#category3").html(data[0].category3);
+		$("#category4").html(data[0].category4);
 
-//       // get dream value and add it to the list
-//       let newDream = dreamsForm.elements.dream.value;
-//       dreams.push(newDream);
-//       appendNewDream(newDream);
+		$("#statement1-1").html(data[0].r1c1);
+		$("#statement1-2").html(data[0].r1c2);
+		$("#statement1-3").html(data[0].r1c3);
+		$("#statement1-4").html(data[0].r1c4);
 
-//       // reset form
-//       dreamsForm.reset();
-//       dreamsForm.elements.dream.focus();
-//     });
-//   });
+		$("#statement2-1").html(data[0].r2c1);
+		$("#statement2-2").html(data[0].r2c2);
+		$("#statement2-3").html(data[0].r2c3);
+		$("#statement2-4").html(data[0].r2c4);
+
+		$("#statement3-1").html(data[0].r3c1);
+		$("#statement3-2").html(data[0].r3c2);
+		$("#statement3-3").html(data[0].r3c3);
+		$("#statement3-4").html(data[0].r3c4);
+
+		$("#statement4-1").html(data[0].r4c1);
+		$("#statement4-2").html(data[0].r4c2);
+		$("#statement4-3").html(data[0].r4c3);
+		$("#statement4-4").html(data[0].r4c4);
+	});
+});
+
+//responding to rubric
+$("#submit_form").click(function() {
+	var categoryRes1;
+	$("[name='options1']").each(function(i) {
+		if ($(this).is(":checked")) categoryRes1 = i + 1;
+	});
+
+	var categoryRes2;
+	$("[name='options2']").each(function(i) {
+		if ($(this).is(":checked")) categoryRes2 = i + 1;
+	});
+
+	var categoryRes3;
+	$("[name='options3']").each(function(i) {
+		if ($(this).is(":checked")) categoryRes3 = i + 1;
+	});
+
+	var categoryRes4;
+	$("[name='options4']").each(function(i) {
+		if ($(this).is(":checked")) categoryRes4 = i + 1;
+	});
+
+	console.log(
+		categoryRes1 +
+		" " +
+		categoryRes2 +
+		" " +
+		categoryRes3 +
+		" " +
+		categoryRes4
+	);
+
+	// TODO: SEND RESULTS
+
+	location.reload();
+});
+
+$("#exit").click(function() {
+	window.location = "/";
+});
+
+$("#make-rubric").click(function() {
+	// TODO: FORM VALIDATION
+	
+	// function validateForm() {
+	// 	var isValid = true;
+	// 	$(".form-control").each(function() {
+	// 		if ($(this).val() === "") isValid = false;
+	// 	});
+	// 	$(".chosen-select").each(function() {
+	// 		if ($(this).val() === "") isValid = false;
+	// 	});
+	// 	return isValid;
+	// }
+	//if (validateForm() == true) {
+	var userData = {
+		rubricID: $("#rubricID").val(),
+
+		category1: $("#category1").val(),
+		r1c1: $("#r1c1").val(),
+		r1c2: $("#r1c2").val(),
+		r1c3: $("#r1c3").val(),
+		r1c4: $("#r1c4").val(),
+
+		category2: $("#category2").val(),
+		r2c1: $("#r2c1").val(),
+		r2c2: $("#r2c2").val(),
+		r2c3: $("#r2c3").val(),
+		r2c4: $("#r2c4").val(),
+
+		category3: $("#category3").val(),
+		r3c1: $("#r3c1").val(),
+		r3c2: $("#r3c2").val(),
+		r3c3: $("#r3c3").val(),
+		r3c4: $("#r3c4").val(),
+
+		category4: $("#category4").val(),
+		r4c1: $("#r4c1").val(),
+		r4c2: $("#r4c2").val(),
+		r4c3: $("#r4c3").val(),
+		r4c4: $("#r4c4").val(),
+	};
+	$.post("/addRubric", userData, function(data) {
+		if (data == "alert") alert("You have entered a code that already exists!");
+		else window.location = "/";
+	});
+});

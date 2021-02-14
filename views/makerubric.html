@@ -1,67 +1,28 @@
-<!-- This is a static file -->
-<!-- served from your routes in server.js -->
-
-<!--https://stannesbelfield.instructure.com/courses/714/assignments/16265?module_item_id=41063-->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="A cool thing made with Glitch" />
 
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
+    <title>St. Anne's-Belfield School :: SBL Rubric</title>
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"
-    ></script>
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
-    <title>SBL Rubric</title>
 
     <!-- import the webpage's stylesheet -->
     <link rel="stylesheet" href="/style.css" />
 
     <!-- import the webpage's client-side javascript file -->
-    <!--<script src="/script.js" defer></script>-->
+    <script src="/script.js" defer></script>
+  </head>
+
+  <body>
 
     <!-- Image and text -->
     <nav class="navbar navbar-light">
@@ -74,13 +35,6 @@
         />
       </a>
     </nav>
-  </head>
-  <body>
-    <header>
-      
-    </header>
-
-    <main></main>
     
     <table style="width:100%" class="table table-hover" id="rubric-to-edit">
       <tbody>
@@ -120,81 +74,5 @@
     <input class="text-center" style="width:278px"  type="text" id="rubricID" placeholder="Create Room Code"/>
     <button id="make-rubric" class="btn btn-outline-light">Create This Rubric!</button>
     <button id="exit" class="btn btn-outline-light">Return to Main!</button>
-
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script>
-      
-    </script>
- 
-   <script type="text/javascript">
-     
-     $("#exit").click(function() {
-       window.location = "https://stab-sbl.glitch.me";
-     });
-
-    $("#make-rubric").click(function() {
-      function validateForm() {
-        var isValid = true;
-        $(".form-control").each(function() {
-          if ($(this).val() === "") isValid = false;
-        });
-        $(".chosen-select").each(function() {
-          if ($(this).val() === "") isValid = false;
-        });
-        return isValid;
-      }
-
-      //if (validateForm() == true) {
-        var userData = {
-          rubricID: $("#rubricID").val(),
-          
-          category1: $("#category1").val(),
-          r1c1: $("#r1c1").val(),
-          r1c2: $("#r1c2").val(),
-          r1c3: $("#r1c3").val(),
-          r1c4: $("#r1c4").val(),
-          
-          category2: $("#category2").val(),
-          r2c1: $("#r2c1").val(),
-          r2c2: $("#r2c2").val(),
-          r2c3: $("#r2c3").val(),
-          r2c4: $("#r2c4").val(),
-          
-          category3: $("#category3").val(),
-          r3c1: $("#r3c1").val(),
-          r3c2: $("#r3c2").val(),
-          r3c3: $("#r3c3").val(),
-          r3c4: $("#r3c4").val(),
-         
-          category4: $("#category4").val(),
-          r4c1: $("#r4c1").val(),
-          r4c2: $("#r4c2").val(),
-          r4c3: $("#r4c3").val(),
-          r4c4: $("#r4c4").val(),
-        };
-
-          //console.log(JSON.stringify(userData));
-
-          $.post("/addRubric", userData, function(data) {
-            if(data=="alert") alert("You have entered a code that already exists!");
-            else window.location = "https://stab-sbl.glitch.me";
-          });
-          
-
-        //} else {
-          //alert("Please fill out all fields before submitting!");
-        //}
-        // return false;
-      
-      
-      });
- 
-    </script>
-  
-  
-  
-  
-  
-  
   </body>
 </html>
