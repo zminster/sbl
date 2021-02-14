@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser'); //enables post requests
 const app = express();
-const { v4: uuidv4 } = require('uuid');
+const {
+  v4: uuidv4
+} = require('uuid');
 const fs = require('fs'); //enables file access
 const mysql = require('mysql2');
 let mustacheExpress = require("mustache-express");
@@ -44,7 +46,7 @@ app.post("/addRubric", async (req, res) => {
       connection.query("INSERT INTO rubrics (title, unique_id) VALUES (?, ?)", [req.body.rubricName, req.body.rubricID], async (err) => {
         if (err) console.log(err);
         connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id=?", [req.body.rubricName, req.body.rubricID], async (err, rubric_id) => {
-        	console.log(rubric_id);
+          console.log(rubric_id);
           if (err) console.log(err);
           async function createRubric(id, standard, l1, l2, l3, l4) {
             return new Promise((resolve, reject) => {
@@ -71,6 +73,7 @@ app.post("/addRubric", async (req, res) => {
               console.log(error);
             }
           }
+          res.end();
         });
       });
     }
@@ -98,7 +101,6 @@ app.get("/getRubric/:code", (req, res) => {
           inner.levels.push(item.level_four);
           obj.standards.push(inner);
         });
-        console.log(obj);
         res.json(obj);
       });
     } else {
@@ -121,6 +123,45 @@ app.post("/submitRubric", (req, res) => {
         });
       });
     });
+  });
+});
+
+app.get("/data/:code", async (req, res) => {
+  connection.query("SELECT id, title FROM rubrics WHERE unique_id=?", req.params.code, async (err, rubric_info) => {
+    if (err) console.log(err);
+    if (rubric_info.length) {
+      let obj = {
+        rubric_name: rubric_info[0].title,
+        standards: []
+      }
+      connection.query("SELECT id, standard, level_one, level_two, level_three, level_four FROM category WHERE rubric_id=?", rubric_info[0].id, async (err, standards) => {
+        if (err) console.log(err);
+        standards.forEach(async (item, index) => {
+          let inner = {};
+          inner.id = item.id
+          inner.standard_name = item.standard;
+          inner.levels = [];
+          async function result_level(level) {
+            return new Promise((resolve, reject) => {
+              connection.query("SELECT id FROM results WHERE category_id=? AND value=?", [item.id, level], (err, count) => {
+                if (err) reject(err);
+                resolve(count.length);
+              });
+            });
+          }
+          inner.levels[0] = { label: item.level_one, y: await result_level(1) };
+          inner.levels[1] = { label: item.level_two, y: await result_level(2) };
+          inner.levels[2] = { label: item.level_three, y: await result_level(3) };
+          inner.levels[3] = { label: item.level_four, y: await result_level(4) };
+          obj.standards.push(inner);
+          if (obj.standards.length == standards.length) {
+            res.json(obj);
+          }
+        });
+      });
+    } else {
+      res.sendStatus(404);
+    }
   });
 });
 
