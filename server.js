@@ -1,9 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser'); //enables post requests
 const app = express();
-const {
-  uuid: v4
-} = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const fs = require('fs'); //enables file access
 const mysql = require('mysql2');
 let mustacheExpress = require("mustache-express");
@@ -38,14 +36,15 @@ app.get("/makeRubric", (req, res) => {
 });
 
 app.post("/addRubric", async (req, res) => {
-  connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id=?", [req.body.title, req.body.rubricID], async (err, num) => {
+  connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id=?", [req.body.rubricName, req.body.rubricID], async (err, num) => {
     if (err) console.log(err);
     if (num.length) {
       res.end("alert");
     } else {
-      connection.query("INSERT INTO rubrics (title, unique_id) VALUES (?, ?)", [req.body.title, req.body.rubricID], async (err) => {
+      connection.query("INSERT INTO rubrics (title, unique_id) VALUES (?, ?)", [req.body.rubricName, req.body.rubricID], async (err) => {
         if (err) console.log(err);
-        connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id=?", [req.body.title, req.body.rubricID], async (err, rubric_id) => {
+        connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id=?", [req.body.rubricName, req.body.rubricID], async (err, rubric_id) => {
+        	console.log(rubric_id);
           if (err) console.log(err);
           async function createRubric(id, standard, l1, l2, l3, l4) {
             return new Promise((resolve, reject) => {
