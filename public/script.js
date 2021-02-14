@@ -1,5 +1,8 @@
 let rubric_id = 0;
 let standard_rows = 0;
+let charts = {};
+let chartUpdateFunctions = {};
+let code = 0;
 
 $(".after-access").hide();
 
@@ -9,7 +12,7 @@ $("#make-rubric").click(function() {
 
 $("#access-rubric").click(function() {
 	//use rubric code
-	let code = "/getRubric/" + $("#rubric-code").val();
+	code = "/getRubric/" + $("#rubric-code").val();
 
 	$.get(code, function(rubric) {
 		// { title: "DEIB Rubric", id: XX, standards: [ { standard: "Listening", id: XX, levels: ["Level 1 Text", "Level 2 Text", "Level 3 Text", "Level 4 Text"] }, ... ] }
@@ -34,7 +37,7 @@ $("#access-rubric").click(function() {
 				radio.attr("value", i);
 
 				let text_area = standard_row.find(".statement" + i + " span");
-				text_area.html(standard.levels[i-1]);
+				text_area.html(standard.levels[i - 1]);
 			}
 
 			// dump on page
@@ -48,26 +51,88 @@ $("#access-rubric").click(function() {
 	});
 });
 
+function updateCharts() {
+	$.get(code, function(data) {
+		data.standards.forEach((standard) => {
+			updateFunctions[standard.id](standard.levels);
+		});
+	});
+}
+
+$("#access-data").click(function() {
+	//use rubric code
+	code = "/data/" + $("#rubric-code").val();
+
+	$.get(code, function(data) {
+		// { rubric_name: "", standards: [ {id: XX, standard_name: "", levels: [ { label: "", y: }, ... ] }, ... ] }
+		$("#headline").html(data.rubric_name);
+
+		data.standards.forEach((standard) => {
+			// create container for chart
+			let container = $("<div>");
+			container.attr("id", standard.id);
+			container.appendTo(".after-access");
+
+			// create chart attached to container
+			charts[standard.id] = new CanvasJS.Chart(standard.id, {
+				animationEnabled: true,
+				theme: "dark2",
+				title: {
+					text: standard.standard_name
+				},
+				axisY: {
+					title: "Respondents",
+					includeZero: true
+				},
+				data: [{
+					type: "column",
+					indexLabel: "{y}",
+					dataPoints: standard.levels
+				}]
+			});
+
+			updateFunctions[standard.id] = (dataPoints) => {
+				charts[standard.id].options.data[0].dataPoints = dataPoints;
+				charts[standard.id].render();
+			};
+			charts[standard.id].render();
+		});
+
+		setInterval(updateCharts, 10000);
+		$(".form__group").hide();
+		$(".buttons").hide();
+		$(".after-access").show();
+	});
+});
+
 $("#submit-rubric").click(function() {
 	// validate and build object from all standards
 	$("#submit-rubric").prop("disabled", true);
 	let choices = [];
 	for (let row = 1; row <= standard_rows; row++) {
-		let id = $("#"+row).find(".option1 input").attr("name");
-		let selected = $("#"+row).find("input[name=" + id + "]:checked");
+		let id = $("#" + row).find(".option1 input").attr("name");
+		let selected = $("#" + row).find("input[name=" + id + "]:checked");
 		if (!selected.val()) {
 			alert("A selection is required in each row!");
 			$("#submit-rubric").prop("disabled", false);
 			return;
 		}
 
-		choices.push({ id: id, level: selected.val() })
+		choices.push({
+			id: id,
+			level: selected.val()
+		})
 	}
 
-	let submission = { rubric_id: rubric_id, choices: choices };
+	let submission = {
+		rubric_id: rubric_id,
+		choices: choices
+	};
 	$.post("/submitRubric", submission, () => {
 		$("#results-received").show();
-		setTimeout(() => { location.reload(); }, 5000);
+		setTimeout(() => {
+			location.reload();
+		}, 5000);
 	});
 });
 
@@ -79,7 +144,7 @@ $("#make-standard").click(function() {
 	standard_rows++;
 	let standard = $("tbody tr:first-child").clone();
 	for (let i = 0; i < 5; i++) {
-		let input = standard.find("td:nth-child(" + (i+1) + ") input");
+		let input = standard.find("td:nth-child(" + (i + 1) + ") input");
 		input.attr("name", standard_rows + " " + i);
 		input.val("");
 	}
