@@ -28,7 +28,10 @@ app.set("views", __dirname + "/views");
 // https://expressjs.com/en/starter/basic-routing.html
 app.get("/", (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
-  //res.render("index.html");
+});
+
+app.get("/makeRubric", (req, res) => {
+  res.sendFile(__dirname + '/views/makerubric.html');
 });
 
 app.post("/addRubric", (req, res) => {
