@@ -1,3 +1,5 @@
+let rubric_id = 0;
+
 $(".after-access").hide();
 
 $("#make-rubric").click(function() {
@@ -5,45 +7,50 @@ $("#make-rubric").click(function() {
 });
 
 $("#access-rubric").click(function() {
-	$(".form__group").hide();
-	$("#headline").hide();
-	$(".buttons").hide();
-	$(".after-access").show();
-
 	//use rubric code
-	var code = $("#rubric-code").val();
+	let code = $("#rubric-code").val();
 
-	$.get("/getRubric", code, function(data) {
-		//replacing text elements
-		$("#category1").html(data[0].category1);
-		$("#category2").html(data[0].category2);
-		$("#category3").html(data[0].category3);
-		$("#category4").html(data[0].category4);
+	$.get("/getRubric", code, function(rubric) {
+		// { title: "DEIB Rubric", id: XX, standards: [ { standard: "Listening", id: XX, levels: ["Level 1 Text", "Level 2 Text", "Level 3 Text", "Level 4 Text"] }, ... ] }
+		$("#headline").html(rubric.title);
+		let standard_template = $("#standard_template");
 
-		$("#statement1-1").html(data[0].r1c1);
-		$("#statement1-2").html(data[0].r1c2);
-		$("#statement1-3").html(data[0].r1c3);
-		$("#statement1-4").html(data[0].r1c4);
+		// global var tracking (for submission)
+		rubric_id = rubric.id;
+		standard_ids = [];
 
-		$("#statement2-1").html(data[0].r2c1);
-		$("#statement2-2").html(data[0].r2c2);
-		$("#statement2-3").html(data[0].r2c3);
-		$("#statement2-4").html(data[0].r2c4);
+		rubric.standards.forEach((standard) => {
+			// clone template row
+			let standard_row = standard_template.clone();
+			standard_row.attr("id", standard.id);
 
-		$("#statement3-1").html(data[0].r3c1);
-		$("#statement3-2").html(data[0].r3c2);
-		$("#statement3-3").html(data[0].r3c3);
-		$("#statement3-4").html(data[0].r3c4);
+			// add name
+			standard_row.find(".standard_name").html(standard.standard);
 
-		$("#statement4-1").html(data[0].r4c1);
-		$("#statement4-2").html(data[0].r4c2);
-		$("#statement4-3").html(data[0].r4c3);
-		$("#statement4-4").html(data[0].r4c4);
+			// process options
+			for (let i = 0; i < standard.levels; i++) {
+				let radio = standard_row.find(".option" + i + " input");
+				radio.attr("name", standard.id);
+				radio.attr("value", i+1);
+
+				let text_area = standard_row.find(".statement" + i + " span");
+				text_area.html(standard.levels[i]);
+			}
+
+			// dump on page
+			standard_row.appendTo("#rubric-to-use");
+		});
+
+		$(".form__group").hide();
+		$(".buttons").hide();
+		$(".after-access").show();
 	});
 });
 
 //responding to rubric
 $("#submit_form").click(function() {
+	// verify 
+
 	var categoryRes1;
 	$("[name='options1']").each(function(i) {
 		if ($(this).is(":checked")) categoryRes1 = i + 1;
@@ -85,7 +92,7 @@ $("#exit").click(function() {
 
 $("#make-rubric").click(function() {
 	// TODO: FORM VALIDATION
-	
+
 	// function validateForm() {
 	// 	var isValid = true;
 	// 	$(".form-control").each(function() {
