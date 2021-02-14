@@ -1,4 +1,5 @@
 let rubric_id = 0;
+let standard_row = 0;
 
 $(".after-access").hide();
 
@@ -8,16 +9,15 @@ $("#make-rubric").click(function() {
 
 $("#access-rubric").click(function() {
 	//use rubric code
-	let code = $("#rubric-code").val();
+	let code = "/getRubric/" + $("#rubric-code").val();
 
-	$.get("/getRubric", code, function(rubric) {
+	$.get(code, function(rubric) {
 		// { title: "DEIB Rubric", id: XX, standards: [ { standard: "Listening", id: XX, levels: ["Level 1 Text", "Level 2 Text", "Level 3 Text", "Level 4 Text"] }, ... ] }
-		$("#headline").html(rubric.title);
+		
 		let standard_template = $("#standard_template");
 
 		// global var tracking (for submission)
 		rubric_id = rubric.id;
-		standard_ids = [];
 
 		rubric.standards.forEach((standard) => {
 			// clone template row
@@ -29,6 +29,7 @@ $("#access-rubric").click(function() {
 
 			// process options
 			for (let i = 0; i < standard.levels; i++) {
+				console.log("DUDE " + i);
 				let radio = standard_row.find(".option" + i + " input");
 				radio.attr("name", standard.id);
 				radio.attr("value", i+1);
@@ -41,6 +42,7 @@ $("#access-rubric").click(function() {
 			standard_row.appendTo("#rubric-to-use");
 		});
 
+		$("#headline").hide();
 		$(".form__group").hide();
 		$(".buttons").hide();
 		$(".after-access").show();
@@ -90,7 +92,19 @@ $("#exit").click(function() {
 	window.location = "/";
 });
 
+$("#make-standard").click(function() {
+	standard_row++;
+	let standard = $("tbody tr:first-child").clone();
+	for (let i = 0; i < 5; i++) {
+		standard.children("td:nth-child(" + i + ") input").attr("name", standard_row + " " + i);
+	}
+	standard.appendTo("#rubric-to-edit tbody");
+	$("#standard_count").val(standard_row);
+});
+
 $("#make-rubric").click(function() {
+
+
 	// TODO: FORM VALIDATION
 
 	// function validateForm() {

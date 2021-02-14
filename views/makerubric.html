@@ -36,43 +36,26 @@
       </a>
     </nav>
     
-    <table style="width:100%" class="table table-hover" id="rubric-to-edit">
-      <tbody>
-        <tr>
-          <td style="width:10%"><input type="text" id="category1" placeholder="Name Category 1"/></td>
-          <td><input type="text" id="r1c1" placeholder="Enter Criteria for Receiving 1"/></td>
-          <td><input type="text" id="r1c2" placeholder="Enter Criteria for Receiving 2"/></td>
-          <td ><input type="text" id="r1c3" placeholder="Enter Criteria for Receiving 3"/></td>
-          <td ><input type="text" id="r1c4" placeholder="Enter Criteria for Receiving 4"/></td>
-        </tr>
+    <form method="POST" action="/addRubric">
+      <table style="width:100%" class="table table-hover" id="rubric-to-edit">
+        <tbody>
+          <tr>
+            <td style="width:10%"><input type="text" name="0 0" placeholder="Standard Name"/></td>
+            <td><input type="text" name="0 1" placeholder="Criteria for Receiving 1"/></td>
+            <td><input type="text" name="0 2" placeholder="Criteria for Receiving 2"/></td>
+            <td><input type="text" name="0 3" placeholder="Criteria for Receiving 3"/></td>
+            <td><input type="text" name="0 4" placeholder="Criteria for Receiving 4"/></td>
+          </tr>
+        </tbody>
+      </table>
 
-        <tr>
-          <td style="width:10%"><input type="text" id="category2" placeholder="Name Category 2"/></td>
-          <td><input type="text" id="r2c1" placeholder="Enter Criteria for Receiving 1"/></td>
-          <td><input type="text" id="r2c2" placeholder="Enter Criteria for Receiving 2"/></td>
-          <td><input type="text" id="r2c3" placeholder="Enter Criteria for Receiving 3"/></td>
-          <td><input type="text" id="r2c4" placeholder="Enter Criteria for Receiving 4"/></td>
-        </tr>
 
-        <tr>
-          <td style="width:10%"><input type="text" id="category3" placeholder="Name Category 3"/></td>
-          <td><input type="text" id="r3c1" placeholder="Enter Criteria for Receiving 1"/></td>
-          <td><input type="text" id="r3c2" placeholder="Enter Criteria for Receiving 2"/></td>
-          <td><input type="text" id="r3c3" placeholder="Enter Criteria for Receiving 3"/></td>
-          <td ><input type="text" id="r3c4" placeholder="Enter Criteria for Receiving 4"/></td>
-        </tr>
-        <tr>
-          <td style="width:10%"><input type="text" id="category4" placeholder="Name Category 4"/></td>
-          <td><input type="text" id="r4c1" placeholder="Enter Criteria for Receiving 1"/></td>
-          <td><input type="text" id="r4c2" placeholder="Enter Criteria for Receiving 2"/></td>
-          <td><input type="text" id="r4c3" placeholder="Enter Criteria for Receiving 3"/></td>
-          <td><input type="text" id="r4c4" placeholder="Enter Criteria for Receiving 4"/></td>
-        </tr>
-      </tbody>
-    </table>
+      <button id="make-standard">Add Standard</button>
 
-    <input class="text-center" style="width:278px"  type="text" id="rubricID" placeholder="Create Room Code"/>
-    <button id="make-rubric" class="btn btn-outline-light">Create This Rubric!</button>
-    <button id="exit" class="btn btn-outline-light">Return to Main!</button>
+      <input class="text-center" style="width:278px"  type="text" id="rubricID" placeholder="Create Room Code"/>
+      <input type="hidden" id="standard_count" name="standard_count" value="1" />
+      <input type="submit" id="make-rubric" class="btn btn-outline-light">Create This Rubric!</button>
+      <button id="exit" class="btn btn-outline-light">Return to Main!</button>
+    </form>
   </body>
 </html>
