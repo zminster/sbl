@@ -54,7 +54,7 @@ $("#access-rubric").click(function() {
 function updateCharts() {
 	$.get(code, function(data) {
 		data.standards.forEach((standard) => {
-			updateFunctions[standard.id](standard.levels);
+			chartUpdateFunctions[standard.id](standard.levels);
 		});
 	});
 }
@@ -68,13 +68,14 @@ $("#access-data").click(function() {
 		$("#headline").html(data.rubric_name);
 
 		data.standards.forEach((standard) => {
+			console.log(standard.id);
 			// create container for chart
-			let container = $("<div>");
-			container.attr("id", standard.id);
+			let container = $("<div class=\"col\" style=\"width:45%; height:400px; display:inline-block;\">");
+			container.attr("id", "chartContainer"+standard.id);
 			container.appendTo(".after-access");
 
 			// create chart attached to container
-			charts[standard.id] = new CanvasJS.Chart(standard.id, {
+			charts[standard.id] = new CanvasJS.Chart("chartContainer"+standard.id, {
 				animationEnabled: true,
 				theme: "dark2",
 				title: {
@@ -91,14 +92,14 @@ $("#access-data").click(function() {
 				}]
 			});
 
-			updateFunctions[standard.id] = (dataPoints) => {
-				charts[standard.id].options.data[0].dataPoints = dataPoints;
-				charts[standard.id].render();
-			};
+			// chartUpdateFunctions[standard.id] = (dataPoints) => {
+			// 	charts[standard.id].options.data[0].dataPoints = dataPoints;
+			// 	charts[standard.id].render();
+			// };
 			charts[standard.id].render();
 		});
 
-		setInterval(updateCharts, 10000);
+		// setInterval(updateCharts, 10000);
 		$(".form__group").hide();
 		$(".buttons").hide();
 		$(".after-access").show();
