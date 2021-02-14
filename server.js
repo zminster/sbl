@@ -31,6 +31,15 @@ app.get("/", (req, res) => {
   //res.render("index.html");
 });
 
+app.post("/addRubric", (req, res) => {
+  connection.query("SELECT id FROM rubrics WHERE title=?", req.body.rubricID, (err, num) => {
+    if (err) console.log(err);
+    if (num.length) {
+      res.end("alert");
+    }
+  });
+});
+
 app.get("/getRubric/:code", (req, res) => {
   connection.query("SELECT id, title FROM rubrics WHERE unique_id=?", req.params.code, (err, id) => {
     if (err) console.log(err);
@@ -38,13 +47,13 @@ app.get("/getRubric/:code", (req, res) => {
       let obj = {};
       obj.title = id[0].title;
       obj.id = id[0].id;
-      obj.standards = {};
+      obj.standards = [];
       connection.query("SELECT standard, id, level_one, level_two, level_three, level_four FROM category WHERE rubric_id=?", id[0].id, (err, standards) => {
         if (err) console.log(err);
         standards.forEach((item, index) => {
           obj.standards.push(item);
         });
-        res.end(obj);
+        res.json(obj);
       });
     } else {
       res.sendStatus(401);
