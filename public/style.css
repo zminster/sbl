@@ -1,0 +1,128 @@
+/* this file is loaded by index.html and styles the page */
+
+* {
+  box-sizing: border-box;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans:wght@500);
+
+body {
+  margin: 2em 1em;
+  line-height: 1.25em;
+  background-color: #703541;
+  font-family: 'Josefin Sans', serif;
+  color: white;
+}
+
+#stab-logo {
+  background: transparent;
+  margin-bottom: 15px;
+  margin-left: 15px;
+
+}
+
+#headline {
+  position: absolute;
+  margin-bottom: 20px;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  margin-top: -180px;
+  margin-left: -100px;
+}
+
+#rubric-code {
+  background-color: #eee;
+  grid-gap: 1em;
+  text-align: center;
+  border-radius: 5px;
+  border: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: -80px;
+  margin-left: -150px;
+  width: 300px;
+  height: 60px;
+  box-shadow: 0 5px 20px #d0d0d0;
+  outline: none;
+  font-size: 18px;
+}
+
+.form__label {
+  position: absolute;
+  font-size: 18px;
+  left: 50%;
+  top: 50%;
+  margin-top: -100px;
+  margin-left: -73px;
+  display: block;
+  transition: all 0.3s;
+  transform: translateY(0rem);
+}
+
+#rubric-code:placeholder-shown + .form__label {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: translateY(70px);
+  transform: translateY(70px);
+}
+
+.buttons {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: 30px;
+  margin-left: -144px;
+}
+
+form button {
+  background-color: #fbe5bc;
+  cursor: pointer;
+  font-size: inherit;
+  line-height: 1.4em;
+  padding: 0.25em 1em;
+  max-width: 20ch;
+}
+
+.statement1, .statement2, .statement3, .statement4 {
+    display: inline-block;
+    position: relative;
+    margin: 1%;
+    float: left;
+    width: 23%;
+    color: white;
+}
+
+
+.category {
+  color: white;
+}
+
+#response, #response2, #response3, #response4 {
+  display: none;
+  font-size: 14px;
+  margin-top: 5px;
+  padding: 2px;
+  height: auto;
+}
+
+
+
+[type|="statement"] {
+    display: none;
+}
+
+#question1:hover #response, #question2:hover #response2, #question3:hover #response3, #question4:hover #response4 {
+  display: block;
+}
+
+[type|="text"] {
+  height:40px;
+  width: 100%;
+  border-radius: 5px;
+  outline: none;
+  border:none;
+  text-align: center;
+  box-shadow: 0 5px 5px #d0d0d0;
+}
