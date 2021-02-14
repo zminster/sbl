@@ -9,10 +9,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const connection = mysql.createConnection({
-  USER: "sbl_user",
-  HOST: "localhost",
-  PASSWORD: "spencer_brown_fan8_17",
-
+  user: 'sbl_user',
+  host: 'localhost',
+  password: 'spencer_brown_fan8_17',
+  database: 'sbldb',
+  insecureAuth: true
 });
 
 // make all the files in 'public' available
@@ -26,4 +27,8 @@ app.set("views", __dirname + "/views");
 app.get("/", (req, res) => {
   // res.sendFile(__dirname + '/views/index.html');
   res.render("index.html");
+});
+
+app.listen(6969, () => {
+  console.log("server go vroom");
 });
