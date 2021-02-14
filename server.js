@@ -126,6 +126,10 @@ app.post("/submitRubric", (req, res) => {
   });
 });
 
+app.get("/data", (req, res) => {
+  res.sendFile(__dirname + '/views/data.html');
+});
+
 app.get("/data/:code", async (req, res) => {
   connection.query("SELECT id, title FROM rubrics WHERE unique_id=?", req.params.code, async (err, rubric_info) => {
     if (err) console.log(err);
