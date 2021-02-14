@@ -55,7 +55,6 @@ $("#make-standard").click(function() {
 	standard_row++;
 	let standard = $("tbody tr:first-child").clone();
 	for (let i = 0; i < 5; i++) {
-		alert(i);
 		standard.find("td:nth-child(" + (i+1) + ") input").attr("name", standard_row + " " + i);
 	}
 	standard.appendTo("#rubric-to-edit tbody");
