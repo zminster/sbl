@@ -13,7 +13,6 @@ $("#access-rubric").click(function() {
 
 	$.get(code, function(rubric) {
 		// { title: "DEIB Rubric", id: XX, standards: [ { standard: "Listening", id: XX, levels: ["Level 1 Text", "Level 2 Text", "Level 3 Text", "Level 4 Text"] }, ... ] }
-		
 		let standard_template = $("#standard_template");
 
 		// global var tracking (for submission)
@@ -28,14 +27,13 @@ $("#access-rubric").click(function() {
 			standard_row.find(".standard_name").html(standard.standard);
 
 			// process options
-			for (let i = 0; i < standard.levels; i++) {
-				console.log("DUDE " + i);
+			for (let i = 1; i <= standard.levels.length; i++) {
 				let radio = standard_row.find(".option" + i + " input");
 				radio.attr("name", standard.id);
-				radio.attr("value", i+1);
+				radio.attr("value", i);
 
 				let text_area = standard_row.find(".statement" + i + " span");
-				text_area.html(standard.levels[i]);
+				text_area.html(standard.levels[i-1]);
 			}
 
 			// dump on page
@@ -96,7 +94,8 @@ $("#make-standard").click(function() {
 	standard_row++;
 	let standard = $("tbody tr:first-child").clone();
 	for (let i = 0; i < 5; i++) {
-		standard.children("td:nth-child(" + i + ") input").attr("name", standard_row + " " + i);
+		alert(i);
+		standard.find("td:nth-child(" + (i+1) + ") input").attr("name", standard_row + " " + i);
 	}
 	standard.appendTo("#rubric-to-edit tbody");
 	$("#standard_count").val(standard_row);

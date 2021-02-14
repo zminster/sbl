@@ -97,7 +97,7 @@ form button {
   color: white;
 }
 
-#response, #response2, #response3, #response4 {
+.response {
   display: none;
   font-size: 14px;
   margin-top: 5px;
@@ -105,13 +105,15 @@ form button {
   height: auto;
 }
 
-
+#standard_template {
+  display:none;
+}
 
 [type|="statement"] {
     display: none;
 }
 
-#question1:hover #response, #question2:hover #response2, #question3:hover #response3, #question4:hover #response4 {
+.standard:hover .response {
   display: block;
 }
 
