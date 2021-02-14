@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser'); //enables post requests
 const app = express();
+const {
+  uuid: v4
+} = require('uuid');
 const fs = require('fs'); //enables file access
 const mysql = require('mysql2');
 let mustacheExpress = require("mustache-express");
@@ -34,11 +37,43 @@ app.get("/makeRubric", (req, res) => {
   res.sendFile(__dirname + '/views/makerubric.html');
 });
 
-app.post("/addRubric", (req, res) => {
-  connection.query("SELECT id FROM rubrics WHERE title=?", req.body.rubricID, (err, num) => {
+app.post("/addRubric", async (req, res) => {
+  connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id=?", [req.body.title, req.body.rubricID], async (err, num) => {
     if (err) console.log(err);
     if (num.length) {
       res.end("alert");
+    } else {
+      connection.query("INSERT INTO rubrics (title, unique_id) VALUES (?, ?)", [req.body.title, req.body.rubricID], async (err) => {
+        if (err) console.log(err);
+        connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id=?", [req.body.title, req.body.rubricID], async (err, rubric_id) => {
+          if (err) console.log(err);
+          async function createRubric(id, standard, l1, l2, l3, l4) {
+            return new Promise((resolve, reject) => {
+              connection.query("INSERT INTO category (rubric_id, standard, level_one, level_two, level_three, level_four) VALUES (?, ?, ?, ?, ?, ?)", [id, standard, l1, l2, l3, l4], async (err) => {
+                if (err) reject(err);
+                resolve();
+              });
+            });
+          }
+          let itemRunner = req.body;
+          let category = [];
+          for (let i = 0; i < req.body.standard_count; i++) {
+            category[i] = [];
+            for (row in itemRunner) {
+              let row_val = row.split(" ");
+              if (parseInt(row_val, 10) == i) {
+                category[i][parseInt(row_val[1], 10)] = req.body[row.toString()];
+              }
+            }
+            await createRubric(rubric_id[0].id, category[i][0], category[i][1], category[i][2], category[i][3], category[i][4]);
+            try {
+              console.log("entering into db");
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        });
+      });
     }
   });
 });
@@ -54,7 +89,7 @@ app.get("/getRubric/:code", (req, res) => {
       connection.query("SELECT standard, id, level_one, level_two, level_three, level_four FROM category WHERE rubric_id=?", id[0].id, (err, standards) => {
         if (err) console.log(err);
         standards.forEach((item, index) => {
-          let inner = { };
+          let inner = {};
           inner.standard = item.standard;
           inner.id = item.id;
           inner.levels = [];
@@ -74,9 +109,10 @@ app.get("/getRubric/:code", (req, res) => {
 });
 
 app.post("/submitRubric", (req, res) => {
-  connection.query("INSERT INTO response (rubric_id) VALUES (?)", req.body.rubric_id, (err) => {
+  let id = uuidv4();
+  connection.query("INSERT INTO response (id, rubric_id) VALUES (?, ?)", [id, req.body.rubric_id], (err) => {
     if (err) console.log(err);
-    connection.query("SELECT id FROM response WHERE rubric_id=?", req.body.rubric_id, (err, response_id) => {
+    connection.query("SELECT id FROM response WHERE id=?", id, (err, response_id) => {
       if (err) console.log(err);
       let choices = req.body.choices;
       choices.forEach((choice, index) => {
