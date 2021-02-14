@@ -23,7 +23,7 @@ CREATE TABLE category (
 );
 
 CREATE TABLE response (
-	id INT NOT NULL AUTO_INCREMENT,
+	id CHAR(36) NOT NULL,
 	rubric_id INT NOT NULL,
 	FOREIGN KEY (`rubric_id`) REFERENCES rubrics (`id`),
 	PRIMARY KEY(id)
@@ -31,7 +31,7 @@ CREATE TABLE response (
 
 CREATE TABLE results (
 	id INT NOT NULL AUTO_INCREMENT,
-	response_id INT NOT NULL,
+	response_id CHAR(36) NOT NULL,
 	category_id INT NOT NULL,
 	value INT(32),
 	FOREIGN KEY(`response_id`) REFERENCES response (`id`),
