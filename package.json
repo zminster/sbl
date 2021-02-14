@@ -10,11 +10,12 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "4.8.x",
     "body-parser": "^1.19.0",
     "consolidate": "0.7.x",
+    "express": "4.8.x",
     "hogan": "^1.0.2",
     "hogan.js": "2.0.x",
+    "mysql2": "^2.2.5"
   },
   "engines": {
     "node": "10.x"
@@ -22,5 +23,5 @@
   "repository": {
     "url": "https://github.com/zminster/sbl.git"
   },
-  "license": "MIT",
+  "license": "MIT"
 }
