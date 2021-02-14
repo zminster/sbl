@@ -73,7 +73,7 @@ app.post("/addRubric", async (req, res) => {
               console.log(error);
             }
           }
-          res.end();
+          res.redirect("/");
         });
       });
     }
