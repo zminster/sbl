@@ -1,5 +1,5 @@
 let rubric_id = 0;
-let standard_row = 0;
+let standard_rows = 0;
 
 $(".after-access").hide();
 
@@ -20,8 +20,9 @@ $("#access-rubric").click(function() {
 
 		rubric.standards.forEach((standard) => {
 			// clone template row
+			standard_rows++;
 			let standard_row = standard_template.clone();
-			standard_row.attr("id", standard.id);
+			standard_row.attr("id", standard_rows);
 
 			// add name
 			standard_row.find(".standard_name").html(standard.standard);
@@ -47,16 +48,41 @@ $("#access-rubric").click(function() {
 	});
 });
 
+$("#submit-rubric").click(function() {
+	// validate and build object from all standards
+	$("#submit-rubric").prop("disabled", true);
+	let choices = [];
+	for (let row = 1; row <= standard_rows; row++) {
+		let id = $("#"+row).find(".option1 input").attr("name");
+		let selected = $("#"+row).find("input[name=" + id + "]:checked");
+		if (!selected.val()) {
+			alert("A selection is required in each row!");
+			$("#submit-rubric").prop("disabled", false);
+			return;
+		}
+
+		choices.push({ id: id, level: selected.val() })
+	}
+
+	let submission = { rubric_id: rubric_id, choices: choices };
+	$.post("/submitRubric", submission, () => {
+		$("#results-received").show();
+		setTimeout(() => { location.reload(); }, 5000);
+	});
+});
+
 $("#exit").click(function() {
 	window.location = "/";
 });
 
 $("#make-standard").click(function() {
-	standard_row++;
+	standard_rows++;
 	let standard = $("tbody tr:first-child").clone();
 	for (let i = 0; i < 5; i++) {
-		standard.find("td:nth-child(" + (i+1) + ") input").attr("name", standard_row + " " + i);
+		let input = standard.find("td:nth-child(" + (i+1) + ") input");
+		input.attr("name", standard_rows + " " + i);
+		input.val("");
 	}
 	standard.appendTo("#rubric-to-edit tbody");
-	$("#standard_count").val(standard_row + 1);
+	$("#standard_count").val(standard_rows + 1);
 });

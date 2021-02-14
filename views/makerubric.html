@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>St. Anne's-Belfield School :: SBL Rubric</title>
+    <title>STAB :: SBL Rubric</title>
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@500&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script
     src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -21,7 +23,6 @@
     <!-- import the webpage's client-side javascript file -->
     <script src="/script.js" defer></script>
   </head>
-
   <body>
 
     <!-- Image and text -->
@@ -37,6 +38,10 @@
     </nav>
     
     <form method="POST" action="/addRubric">
+      <div>
+        <input class="text-center" style="width:278px"  type="text" id="rubricName" name="rubricName" placeholder="Rubric Name"/>
+        <input class="text-center" style="width:278px"  type="text" id="rubricID" name="rubricID" placeholder="Rubric Code"/>
+      </div>
       <table style="width:100%" class="table table-hover" id="rubric-to-edit">
         <tbody>
           <tr>
@@ -48,15 +53,14 @@
           </tr>
         </tbody>
       </table>
-
-
-      <button id="make-standard">Add Standard</button>
-
-      <input class="text-center" style="width:278px"  type="text" id="rubricID" name="rubricID" placeholder="Create Room Code"/>
-      <input class="text-center" style="width:278px"  type="text" id="rubricName" name="rubricName" placeholder="Create Rubric Name"/>
-      <input type="hidden" id="standard_count" name="standard_count" value="1" />
-      <input type="submit" id="make-rubric" class="btn btn-outline-light">Create This Rubric!</button>
-      <button id="exit" class="btn btn-outline-light">Return to Main!</button>
+      <div>
+        <button id="make-standard" class="btn btn-outline-light">Add Another Standard</button>
+      </div>
+      <div>
+        <input type="hidden" id="standard_count" name="standard_count" value="1" />
+        <input type="submit" id="make-rubric" class="btn btn-outline-light" value="Create This Rubric!">
+        <button id="exit" class="btn btn-outline-light">Return to Main!</button>
+      </div>
     </form>
   </body>
 </html>

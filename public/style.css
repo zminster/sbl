@@ -2,8 +2,6 @@
   box-sizing: border-box;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@500&display=swap');
-
 body {
   margin: 2em 1em;
   line-height: 1.25em;
@@ -105,7 +103,7 @@ form button {
   height: auto;
 }
 
-#standard_template {
+#standard_template, #results-received {
   display:none;
 }
 
