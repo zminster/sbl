@@ -24,17 +24,19 @@
     <script src="/script.js" defer></script>
   </head>
   <body>
-
-    <!-- Image and text -->
-    <nav class="navbar navbar-light">
-      <a class="navbar-brand" href="https://www.stab.org">
+    <nav class="navbar navbar-dark justify-content-between">
+      <a class="navbar-brand" href="/">
         <img
           src="https://resources.finalsite.net/images/f_auto,q_auto,t_image_size_2/v1517848658/stab/kqjmji4mkskgiuukevmp/logo-footer.png"
-          height="40"
-          class="d-inline-block align-top"
-          id="stab-logo"
+          height="30"
+          class="d-inline-block align-center"
         />
       </a>
+      <div class="nav">
+        <a class="nav-item nav-link" href="/">Respond</a>
+        <a class="nav-item nav-link active" href="/makeRubric">Create</a>
+        <a class="nav-item nav-link" href="/data">Data</a>
+      </div>
     </nav>
     
     <form method="POST" action="/addRubric">
@@ -56,10 +58,9 @@
       <div>
         <button type="button" id="make-standard" class="btn btn-outline-light">Add Another Standard</button>
       </div>
-      <div>
+      <div class="buttons">
         <input type="hidden" id="standard_count" name="standard_count" value="1" />
-        <input type="submit" class="btn btn-outline-light" value="Create This Rubric!">
-        <button type="button" id="exit" class="btn btn-outline-light">Return to Main!</button>
+        <input type="submit" class="btn btn-outline-light" value="Create Rubric">
       </div>
     </form>
   </body>

@@ -12,19 +12,13 @@ body {
 
 #stab-logo {
   background: transparent;
-  margin-bottom: 15px;
+  margin-bottom: 4px;
   margin-left: 15px;
-
 }
 
 #headline {
-  position: absolute;
   margin-bottom: 20px;
   text-align: center;
-  top: 50%;
-  left: 50%;
-  margin-top: -180px;
-  margin-left: -100px;
 }
 
 #rubric-code {
@@ -69,8 +63,11 @@ body {
   left: 50%;
   top: 50%;
   margin-top: 30px;
-  margin-left: -144px;
+  margin-left: -68px;
 }
+
+.buttons button {
+width:137px; }
 
 form button {
   background-color: #fbe5bc;
@@ -103,7 +100,7 @@ form button {
   height: auto;
 }
 
-#standard_template, #results-received, .canvasjs-chart-credit {
+#standard_template, #results-received, .canvasjs-chart-credit, #exit {
   display:none !important;
 }
 

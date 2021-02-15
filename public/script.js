@@ -70,9 +70,9 @@ $("#access-data").click(function() {
 		data.standards.forEach((standard) => {
 			console.log(standard.id);
 			// create container for chart
-			let container = $("<div class=\"col\" style=\"width:45%; height:400px; display:inline-block;\">");
+			let container = $("<div class=\"col\" style=\"width:50%; height:400px; display:inline-block;\">");
 			container.attr("id", "chartContainer"+standard.id);
-			container.appendTo(".after-access");
+			container.appendTo("#after-access-data");
 
 			// create chart attached to container
 			charts[standard.id] = new CanvasJS.Chart("chartContainer"+standard.id, {
@@ -102,7 +102,7 @@ $("#access-data").click(function() {
 		setInterval(updateCharts, 10000);
 		$(".form__group").hide();
 		$(".buttons").hide();
-		$(".after-access").show();
+		$("#after-access-data").show();
 	});
 });
 
@@ -138,7 +138,7 @@ $("#submit-rubric").click(function() {
 });
 
 $("#exit").click(function() {
-	window.location = "/";
+	location.reload();
 });
 
 $("#make-standard").click(function() {

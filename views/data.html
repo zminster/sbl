@@ -25,20 +25,24 @@
     <script src="/script.js" defer></script>
   </head>
   <body>
-
-    <!-- Image and text -->
-    <a class="navbar-brand" href="https://www.stab.org">
-      <img
-        src="https://resources.finalsite.net/images/f_auto,q_auto,t_image_size_2/v1517848658/stab/kqjmji4mkskgiuukevmp/logo-footer.png"
-        height="40"
-        class="d-inline-block align-top"
-        id="stab-logo"
-      />
-    </a>
+    <nav class="navbar navbar-dark justify-content-between">
+      <a class="navbar-brand" href="/">
+        <img
+          src="https://resources.finalsite.net/images/f_auto,q_auto,t_image_size_2/v1517848658/stab/kqjmji4mkskgiuukevmp/logo-footer.png"
+          height="30"
+          class="d-inline-block align-center"
+        />
+      </a>
+      <div class="nav">
+        <a class="nav-item nav-link" href="/">Respond</a>
+        <a class="nav-item nav-link" href="/makeRubric">Create</a>
+        <a class="nav-item nav-link active" href="/data">Data</a>
+      </div>
+    </nav>
 
     <h1 id="headline">SBL Rubric</h1>
 
-    <div class="after-access container">
+    <div id="after-access-data" class="container">
 
     </div>
     
@@ -53,10 +57,7 @@
     
     <div class="buttons"> 
       <button id="access-data" type="button" class="btn btn-outline-light">
-        Get Live Data!
-      </button>
-      <button id="exit" type="button" class="btn btn-outline-light">
-        Return to Main!
+        See Live Data
       </button>
     </div>
   </body>
