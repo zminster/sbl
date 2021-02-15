@@ -87,7 +87,8 @@ body {
 }
 
 .buttons button {
-width:137px; }
+  width:137px;
+}
 
 form button {
   background-color: #fbe5bc;
@@ -120,8 +121,12 @@ form button {
   height: auto;
 }
 
-#standard_template, #results-received, .canvasjs-chart-credit, #exit {
+#standard_template, .canvasjs-chart-credit, #exit {
   display:none !important;
+}
+
+#results-received {
+  display:none;
 }
 
 [type|="statement"] {
