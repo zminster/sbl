@@ -113,7 +113,7 @@ app.get("/getRubric/:code", (req, res) => {
         res.json(obj);
       });
     } else {
-      res.send(404);
+      res.status(404);
     }
   });
 });
