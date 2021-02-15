@@ -10,6 +10,18 @@ body {
   color: white;
 }
 
+.nav-link.active {
+  color:ivory;
+}
+
+.nav-link {
+  color:white;
+}
+
+.nav-link:hover {
+  color:gray;
+}
+
 #stab-logo {
   background: transparent;
   margin-bottom: 4px;
