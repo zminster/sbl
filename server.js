@@ -173,7 +173,7 @@ app.get("/data/:code", async (req, res) => {
         });
       });
     } else {
-      res.redirect("/");
+      res.end("404");
     }
   });
 });
