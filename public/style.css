@@ -17,6 +17,14 @@ body {
 
 }
 
+#rubric_title {
+  position: absolute;
+  text-align: center;
+  top: 5%;
+  left: 50%;
+  margin-left: -50px;
+}
+
 #headline {
   position: absolute;
   margin-bottom: 20px;
