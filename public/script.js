@@ -11,6 +11,7 @@ $("#make-rubric").click(function() {
 });
 
 $("#access-rubric").click(function() {
+	if ($("#rubric-code").val().length === 0) return;
 	//use rubric code
 	code = "/getRubric/" + $("#rubric-code").val();
 
@@ -64,6 +65,7 @@ function updateCharts() {
 }
 
 $("#access-data").click(function() {
+	if ($("#rubric-code").val().length === 0) return;
 	//use rubric code
 	code = "/data/" + $("#rubric-code").val();
 
@@ -92,6 +94,9 @@ $("#access-data").click(function() {
 					title: "Respondents",
 					includeZero: true
 				},
+				axisX: {
+					labelAutoFit: true
+				},
 				data: [{
 					type: "column",
 					indexLabel: "{y}",
@@ -99,9 +104,12 @@ $("#access-data").click(function() {
 				}]
 			});
 
+			container.find("canvas")[0].getContext("2d").fillRect(0, 344, 500, 400);
+
 			chartUpdateFunctions[standard.id] = (dataPoints) => {
 				charts[standard.id].options.data[0].dataPoints = dataPoints;
 				charts[standard.id].render();
+							container.find("canvas")[0].getContext("2d").fillRect(0, 344, 500, 56);
 			};
 			charts[standard.id].render();
 		});
