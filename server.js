@@ -41,7 +41,7 @@ app.post("/addRubric", async (req, res) => {
   connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id=?", [req.body.rubricName, req.body.rubricID], async (err, num) => {
     if (err) console.log(err);
     if (num.length) {
-      res.end("alert");
+      res.redirect("/makeRubric");
     } else {
       connection.query("INSERT INTO rubrics (title, unique_id) VALUES (?, ?)", [req.body.rubricName, req.body.rubricID], async (err) => {
         if (err) console.log(err);
