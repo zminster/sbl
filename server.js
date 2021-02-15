@@ -37,11 +37,19 @@ app.get("/makeRubric", (req, res) => {
   res.sendFile(__dirname + '/views/makerubric.html');
 });
 
+app.post("/validateRubric", (req, res) => {
+  connection.query("SELECT id FROM rubcrics WHERE title=? AND unique_id", [req.body.rubricName, req.body.rubricID], (err, ans) => {
+    if (err) console.log(err);
+    if (ans.length) res.end("uh oh");
+    res.end();
+  });
+});
+
 app.post("/addRubric", async (req, res) => {
   connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id=?", [req.body.rubricName, req.body.rubricID], async (err, num) => {
     if (err) console.log(err);
     if (num.length) {
-      res.redirect("/makeRubric");
+      res.redirect("/");
     } else {
       connection.query("INSERT INTO rubrics (title, unique_id) VALUES (?, ?)", [req.body.rubricName, req.body.rubricID], async (err) => {
         if (err) console.log(err);
@@ -105,7 +113,7 @@ app.get("/getRubric/:code", (req, res) => {
         res.json(obj);
       });
     } else {
-      res.redirect("/");
+      res.send(404);
     }
   });
 });
