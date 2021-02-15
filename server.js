@@ -22,7 +22,7 @@ const connection = mysql.createConnection({
 });
 
 // make all the files in 'public' available
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 app.set('view engine', 'mustache');
 app.engine('mustache', mustacheExpress());
 //using HOGAN to render HTML files
@@ -71,8 +71,10 @@ app.post("/addRubric", async (req, res) => {
             } catch (error) {
               console.log(error);
             }
+            if (i == req.body.standard_count - 1) {
+              res.redirect("/");
+            }
           }
-          res.redirect("/");
         });
       });
     }
