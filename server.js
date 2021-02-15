@@ -38,7 +38,7 @@ app.get("/makeRubric", (req, res) => {
 });
 
 app.post("/validateRubric", (req, res) => {
-  connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id=?", [req.body.rubricName, req.body.rubricID], (err, ans) => {
+  connection.query("SELECT id FROM rubrics WHERE unique_id=?", req.body.rubricID, (err, ans) => {
     if (err) console.log(err);
     if (ans.length > 0) res.end("uh oh");
     res.end();
@@ -46,7 +46,7 @@ app.post("/validateRubric", (req, res) => {
 });
 
 app.post("/addRubric", async (req, res) => {
-  connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id=?", [req.body.rubricName, req.body.rubricID], async (err, num) => {
+  connection.query("SELECT id FROM rubrics WHERE unique_id=?", req.body.rubricID, async (err, num) => {
     if (err) console.log(err);
     if (num.length) {
       res.redirect("/");
