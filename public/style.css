@@ -103,8 +103,8 @@ form button {
   height: auto;
 }
 
-#standard_template, #results-received {
-  display:none;
+#standard_template, #results-received, .canvasjs-chart-credit {
+  display:none !important;
 }
 
 [type|="statement"] {

@@ -92,14 +92,14 @@ $("#access-data").click(function() {
 				}]
 			});
 
-			// chartUpdateFunctions[standard.id] = (dataPoints) => {
-			// 	charts[standard.id].options.data[0].dataPoints = dataPoints;
-			// 	charts[standard.id].render();
-			// };
+			chartUpdateFunctions[standard.id] = (dataPoints) => {
+				charts[standard.id].options.data[0].dataPoints = dataPoints;
+				charts[standard.id].render();
+			};
 			charts[standard.id].render();
 		});
 
-		// setInterval(updateCharts, 10000);
+		setInterval(updateCharts, 10000);
 		$(".form__group").hide();
 		$(".buttons").hide();
 		$(".after-access").show();
