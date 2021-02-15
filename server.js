@@ -46,7 +46,6 @@ app.post("/addRubric", async (req, res) => {
       connection.query("INSERT INTO rubrics (title, unique_id) VALUES (?, ?)", [req.body.rubricName, req.body.rubricID], async (err) => {
         if (err) console.log(err);
         connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id=?", [req.body.rubricName, req.body.rubricID], async (err, rubric_id) => {
-          console.log(rubric_id);
           if (err) console.log(err);
           async function createRubric(id, standard, l1, l2, l3, l4) {
             return new Promise((resolve, reject) => {
@@ -104,7 +103,7 @@ app.get("/getRubric/:code", (req, res) => {
         res.json(obj);
       });
     } else {
-      res.sendStatus(401);
+      res.redirect("/");
     }
   });
 });
@@ -164,7 +163,7 @@ app.get("/data/:code", async (req, res) => {
         });
       });
     } else {
-      res.sendStatus(404);
+      res.redirect("/");
     }
   });
 });
