@@ -104,12 +104,9 @@ $("#access-data").click(function() {
 				}]
 			});
 
-			container.find("canvas")[0].getContext("2d").fillRect(0, 344, 500, 400);
-
 			chartUpdateFunctions[standard.id] = (dataPoints) => {
 				charts[standard.id].options.data[0].dataPoints = dataPoints;
 				charts[standard.id].render();
-							container.find("canvas")[0].getContext("2d").fillRect(0, 344, 500, 56);
 			};
 			charts[standard.id].render();
 		});
