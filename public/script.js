@@ -166,7 +166,7 @@ $("#create-rubric").submit(function(e) {
 		{ rubricName: $("#rubricName").val(), rubricID: $("#rubricID").val() },
 		function(response, status) {
 			if (response == "") {
-				$(this).unbind('submit').submit();
+				$("#create-rubric").unbind('submit').submit();
 			} else {
 				alert("This Rubric Name / Code Is Taken");
 			}
