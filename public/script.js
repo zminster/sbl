@@ -15,6 +15,10 @@ $("#access-rubric").click(function() {
 	code = "/getRubric/" + $("#rubric-code").val();
 
 	$.get(code, function(rubric) {
+		if (rubric == "404") {
+			alert("This code is not valid!");
+			return;
+		}
 		// { title: "DEIB Rubric", id: XX, standards: [ { standard: "Listening", id: XX, levels: ["Level 1 Text", "Level 2 Text", "Level 3 Text", "Level 4 Text"] }, ... ] }
 		let standard_template = $("#standard_template");
 
@@ -64,11 +68,14 @@ $("#access-data").click(function() {
 	code = "/data/" + $("#rubric-code").val();
 
 	$.get(code, function(data) {
+		if (data == "404") {
+			alert("This code is not valid!");
+			return;
+		}
 		// { rubric_name: "", standards: [ {id: XX, standard_name: "", levels: [ { label: "", y: }, ... ] }, ... ] }
 		$("#headline").html(data.rubric_name);
 
 		data.standards.forEach((standard) => {
-			console.log(standard.id);
 			// create container for chart
 			let container = $("<div class=\"col\" style=\"width:50%; height:400px; display:inline-block;\">");
 			container.attr("id", "chartContainer"+standard.id);
@@ -151,4 +158,17 @@ $("#make-standard").click(function() {
 	}
 	standard.appendTo("#rubric-to-edit tbody");
 	$("#standard_count").val(standard_rows + 1);
+});
+
+$("#create-rubric").submit(function(e) {
+	e.preventDefault();
+	$.post("/validateRubric",
+		{ rubricName: $("#rubricName").val(), rubricID: $("#rubricID").val() },
+		function(response, status) {
+			if (response == "") {
+				$(this).unbind('submit').submit();
+			} else {
+				alert("This Rubric Name / Code Is Taken");
+			}
+		});
 });
