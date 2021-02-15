@@ -38,7 +38,7 @@ app.get("/makeRubric", (req, res) => {
 });
 
 app.post("/validateRubric", (req, res) => {
-  connection.query("SELECT id FROM rubcrics WHERE title=? AND unique_id", [req.body.rubricName, req.body.rubricID], (err, ans) => {
+  connection.query("SELECT id FROM rubrics WHERE title=? AND unique_id", [req.body.rubricName, req.body.rubricID], (err, ans) => {
     if (err) console.log(err);
     if (ans.length) res.end("uh oh");
     res.end();
