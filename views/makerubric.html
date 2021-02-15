@@ -38,30 +38,47 @@
         <a class="nav-item nav-link" href="/data">Data</a>
       </div>
     </nav>
+
+    <h1 id="headline">Create Rubric</h1>
     
     <form method="POST" action="/addRubric">
-      <div>
-        <input class="text-center" style="width:278px"  type="text" id="rubricName" name="rubricName" placeholder="Rubric Name"/>
-        <input class="text-center" style="width:278px"  type="text" id="rubricID" name="rubricID" placeholder="Rubric Code"/>
+      <div class="container-fluid">
+        <div class="row pb-4">
+          <div class="col" align="center">
+            <input class="text-center" style="width:278px"  type="text" id="rubricName" name="rubricName" placeholder="Rubric Name"/>
+          </div>
+          <div class="col" align="center">
+            <input class="text-center" style="width:278px"  type="text" id="rubricID" name="rubricID" placeholder="Rubric Code (no spaces)"/>
+          </div>
+        </div>
+      
+      <div class="row">
+        <div class="col">
+          <table style="width:100%" class="table table-hover" id="rubric-to-edit">
+            <tbody>
+              <tr>
+                <td style="width:10%"><input type="text" name="0 0" placeholder="Standard Name"/></td>
+                <td><input type="text" name="0 1" placeholder="Criteria for Level 1"/></td>
+                <td><input type="text" name="0 2" placeholder="Criteria for Level 2"/></td>
+                <td><input type="text" name="0 3" placeholder="Criteria for Level 3"/></td>
+                <td><input type="text" name="0 4" placeholder="Criteria for Level 4"/></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <table style="width:100%" class="table table-hover" id="rubric-to-edit">
-        <tbody>
-          <tr>
-            <td style="width:10%"><input type="text" name="0 0" placeholder="Standard Name"/></td>
-            <td><input type="text" name="0 1" placeholder="Criteria for Receiving 1"/></td>
-            <td><input type="text" name="0 2" placeholder="Criteria for Receiving 2"/></td>
-            <td><input type="text" name="0 3" placeholder="Criteria for Receiving 3"/></td>
-            <td><input type="text" name="0 4" placeholder="Criteria for Receiving 4"/></td>
-          </tr>
-        </tbody>
-      </table>
-      <div>
-        <button type="button" id="make-standard" class="btn btn-outline-light">Add Another Standard</button>
+      <div class="row pb-4">
+        <div class="col">
+          <button type="button" id="make-standard" class="btn btn-outline-light">Add Another Standard</button>
+        </div>
       </div>
-      <div class="buttons">
-        <input type="hidden" id="standard_count" name="standard_count" value="1" />
-        <input type="submit" class="btn btn-outline-light" value="Create Rubric">
+      <div class="row">
+        <div class="col" align="center">
+          <input type="hidden" id="standard_count" name="standard_count" value="1" />
+          <input type="submit" class="btn btn-outline-light" value="Create Rubric">
+        </div>
       </div>
+    </div>
     </form>
   </body>
 </html>
